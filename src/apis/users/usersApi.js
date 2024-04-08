@@ -46,3 +46,10 @@ export const logoutApi = async () => {
   );
   return res?.data;
 };
+
+export const profileApi = async () => {
+  const res = await axios.get("http://localhost:5000/api/v1/user/", {
+    withCredentials: true,
+  });
+  return res?.data;
+};

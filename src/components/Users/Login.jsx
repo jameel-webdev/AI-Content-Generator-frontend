@@ -32,10 +32,14 @@ const Login = () => {
     },
   });
   useEffect(() => {
+    let timeOut;
     if (mutation.isSuccess) {
-      login();
-      navigate("/dashboard");
+      timeOut = setTimeout(() => {
+        login();
+        navigate("/dashboard");
+      }, 1000);
     }
+    return () => clearTimeout(timeOut);
   }, [login, mutation, navigate]);
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">

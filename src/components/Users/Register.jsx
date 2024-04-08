@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { registerUserApi } from "../../apis/users/usersApi";
@@ -29,9 +29,17 @@ const Registration = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       mutation.mutate(values);
-      navigate("/login");
     },
   });
+  useEffect(() => {
+    let timeOut;
+    if (mutation.isSuccess) {
+      timeOut = setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    }
+    return () => clearTimeout(timeOut);
+  }, [navigate, mutation]);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 m-4">

@@ -18,16 +18,11 @@ const ProtectedRoute = () => {
 };
 
 const PublicRoute = () => {
-  const { auth, isLoading, isError } = useAuth();
-  const location = useLocation();
+  const { auth } = useAuth();
   if (auth) {
     return <Navigate to="/dashboard" />;
-  }
-  if (isLoading) {
-    return <Loader />;
-  }
-  if (isError || auth === false) {
-    return <Navigate to="/login" state={location} replace />;
+  } else {
+    return <Outlet />;
   }
 };
 
