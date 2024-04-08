@@ -1,10 +1,11 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
-import StatusMessage from "../Alert/StatusMessage";
-import { loginUserApi } from "../../apis/users/usersApi";
 import { useMutation } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { loginUserApi } from "../../apis/users/usersApi";
+import { useAuth } from "../../AuthContext/AuthContext";
+import StatusMessage from "../Alert/StatusMessage";
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -15,6 +16,7 @@ const validationSchema = Yup.object({
 });
 
 const Login = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   // Mutation
   const mutation = useMutation({ mutationFn: loginUserApi });
@@ -27,9 +29,14 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       mutation.mutate(values);
-      navigate("/dashboard");
     },
   });
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      login();
+      navigate("/dashboard");
+    }
+  }, [login, mutation, navigate]);
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 m-4">
