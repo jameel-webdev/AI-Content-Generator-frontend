@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ai from "../../assests/ai.jpg";
+import ai from "../assests/ai.jpg";
 
 const Home = () => {
   return (

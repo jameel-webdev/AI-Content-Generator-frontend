@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { profileApi } from "../../apis/users/usersApi";
-import Loader from "../Loader";
-import StatusMessage from "../Alert/StatusMessage";
+import Loader from "../components/Loader.component";
+import StatusMessage from "../components/StatusMessage.component";
+import { profileApi } from "../apis/usersApi";
 
 const Dashboard = () => {
   const { data, isLoading, isError, isSuccess, error } = useQuery({
@@ -72,7 +72,8 @@ const Dashboard = () => {
               <p className="mb-4">Credit Remaining: {remainingCredit}</p>
               <p className="mb-4">
                 Next Billing Date:{" "}
-                {data?.user?.nextBillingDate || "No Billing Date"}
+                {new Date(data?.user?.nextBillingDate).toDateString() ||
+                  "No Billing Date"}
               </p>
             </div>
           </div>

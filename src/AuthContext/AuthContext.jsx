@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { checkUserAuthentication } from "../apis/users/usersApi";
+import { checkUserAuthentication } from "../apis/usersApi";
 import { useQuery } from "@tanstack/react-query";
 
 export const AuthContext = createContext();

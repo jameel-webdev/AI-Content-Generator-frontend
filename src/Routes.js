@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuth } from "../AuthContext/AuthContext";
+import { useAuth } from "./AuthContext/AuthContext";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import Loader from "./Loader";
+import Loader from "./components/Loader.component";
 
 const ProtectedRoute = () => {
   const { auth, isLoading, isError } = useAuth();

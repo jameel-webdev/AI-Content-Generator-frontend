@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { registerUserApi } from "../../apis/users/usersApi";
-import StatusMessage from "../Alert/StatusMessage";
+import { registerUserApi } from "../apis/usersApi";
+import StatusMessage from "../components/StatusMessage.component";
 
 // Validation schema
 const validationSchema = Yup.object({

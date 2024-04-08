@@ -3,11 +3,11 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useMutation } from "@tanstack/react-query";
 import { Fragment, useEffect } from "react";
-import { FaCreativeCommonsShare } from "react-icons/fa6";
+import { SiContentful } from "react-icons/si";
 import { FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutApi } from "../../apis/users/usersApi";
-import { useAuth } from "../../AuthContext/AuthContext";
+import { logoutApi } from "../apis/usersApi";
+import { useAuth } from "../AuthContext/AuthContext";
 
 const user = {
   name: "Tom Cook",
@@ -42,7 +42,7 @@ export default function PrivateNavbar() {
     <Disclosure as="nav" className="bg-gray-900">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 border-b-2 border-white">
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
@@ -60,7 +60,7 @@ export default function PrivateNavbar() {
                 <div className="flex flex-shrink-0 items-center">
                   {/* logo */}
                   <Link to="/" className="text-white">
-                    <FaCreativeCommonsShare className="h-10 w-10" />
+                    <SiContentful className="h-10 w-10" />
                   </Link>
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">

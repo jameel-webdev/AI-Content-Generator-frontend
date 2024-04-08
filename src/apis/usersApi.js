@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const server = "http://localhost:5000";
+
 export const registerUserApi = async (userData) => {
   const res = await axios.post(
-    "http://localhost:5000/api/v1/user/register",
+    `${server}/api/v1/user/register`,
     {
       username: userData?.username,
       email: userData?.email,
@@ -17,7 +19,7 @@ export const registerUserApi = async (userData) => {
 
 export const loginUserApi = async (userData) => {
   const res = await axios.post(
-    "http://localhost:5000/api/v1/user/login",
+    `${server}/api/v1/user/login`,
     {
       email: userData?.email,
       password: userData?.password,
@@ -30,7 +32,7 @@ export const loginUserApi = async (userData) => {
 };
 
 export const checkUserAuthentication = async () => {
-  const res = await axios.get("http://localhost:5000/api/v1/user/auth", {
+  const res = await axios.get(`${server}/api/v1/user/auth`, {
     withCredentials: true,
   });
   return res?.data;
@@ -38,7 +40,7 @@ export const checkUserAuthentication = async () => {
 
 export const logoutApi = async () => {
   const res = await axios.post(
-    "http://localhost:5000/api/v1/user/logout",
+    `${server}/api/v1/user/logout`,
     {},
     {
       withCredentials: true,
@@ -48,7 +50,7 @@ export const logoutApi = async () => {
 };
 
 export const profileApi = async () => {
-  const res = await axios.get("http://localhost:5000/api/v1/user/", {
+  const res = await axios.get(`${server}/api/v1/user/`, {
     withCredentials: true,
   });
   return res?.data;
