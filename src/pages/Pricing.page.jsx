@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 const tiers = [
   {
@@ -52,10 +51,10 @@ function classNames(...classes) {
 }
 
 export default function Plans() {
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const handleSelectedPlan = (plan) => {
-    setSelectedPlan(plan);
-  };
+  // const [selectedPlan, setSelectedPlan] = useState(null);
+  // const handleSelectedPlan = (plan) => {
+  //   setSelectedPlan(plan);
+  // };
 
   return (
     <div className="bg-gray-900 py-24 sm:py-32">
@@ -83,7 +82,6 @@ export default function Plans() {
                 "rounded-3xl p-8 xl:p-10"
                 //  selected plan
               )}
-              onClick={() => handleSelectedPlan(tier)}
             >
               <div className="flex items-center justify-between gap-x-4">
                 <h3
