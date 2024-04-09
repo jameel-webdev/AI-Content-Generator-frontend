@@ -19,22 +19,23 @@ const Home = () => {
                 AI Content Generator
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-300">
-                Content Genie Hub is a content generator that uses AI to
-                generate content for you. It is a tool that helps you generate
-                content for your blog, website, or social media.
+                Our platform harnesses the power of Gemini AI to revolutionize
+                the way you generate content. Whether you're seeking
+                inspiration, looking for answers, or simply exploring new ideas,
+                Content Genie Hub is here to assist you.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Link
-                  to="free-plan"
+                  to="/login"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
                 >
-                  Start 3 Day Free Trial
+                  Login
                 </Link>
                 <Link
-                  to="free-plan"
+                  to="/register"
                   className="text-sm font-semibold leading-6 text-white"
                 >
-                  Learn more <span aria-hidden="true">→</span>
+                  Register <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>

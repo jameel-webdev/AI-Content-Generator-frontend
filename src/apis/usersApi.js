@@ -50,7 +50,7 @@ export const logoutApi = async () => {
 };
 
 export const profileApi = async () => {
-  const res = await axios.get(`${server}/api/v1/user/`, {
+  const res = await axios.get(`${server}/api/v1/user`, {
     withCredentials: true,
   });
   return res?.data;
