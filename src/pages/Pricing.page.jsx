@@ -60,29 +60,33 @@ export default function Plans() {
   });
   const navigate = useNavigate();
   const mutation = useMutation({ mutationFn: upgradeSubscriptionApi });
+
+  const navigateToCheckout = (clientSecret) => {
+    navigate(
+      `/checkout?plan=${selectedPlan.subscriptionPlan}&amount=${selectedPlan.amount}&credits=${selectedPlan.monthlyRequestCount}`,
+      {
+        state: clientSecret,
+      }
+    );
+  };
+
   useEffect(() => {
-    let timeOut;
     if (
       selectedPlan.subscriptionPlan === "Basic" ||
       selectedPlan.subscriptionPlan === "Premium"
     ) {
       mutation.mutate(selectedPlan);
-      if (mutation?.isSuccess) {
-        console.log(mutation?.data?.clientSecret);
-        timeOut = setTimeout(() => {
-          navigate(
-            `/checkout?plan=${selectedPlan.subscriptionPlan}&amount=${selectedPlan.amount}&credits=${selectedPlan.monthlyRequestCount}`,
-            {
-              state: mutation?.data?.clientSecret,
-            }
-          );
-        }, 500);
-      }
     } else if (selectedPlan.subscriptionPlan === "Free") {
       navigate("/freeplan");
     }
-    return () => clearTimeout(timeOut);
   }, [selectedPlan, navigate]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      const clientSecret = mutation.data.clientSecret;
+      navigateToCheckout(clientSecret);
+    }
+  }, [mutation.isSuccess, navigateToCheckout]);
 
   const handleSelectedPlan = (plan) => {
     setSelectedPlan({

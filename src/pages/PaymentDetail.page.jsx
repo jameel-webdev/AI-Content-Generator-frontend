@@ -7,10 +7,9 @@ import { verifyPaymentApi } from "../apis/paymentApi";
 const PaymentDetails = () => {
   const params = new URLSearchParams(window.location.search);
   const paymentIntentID = params.get("payment_intent");
-  const { data, isLoading, isError } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryFn: () => verifyPaymentApi(paymentIntentID),
   });
-  console.log(data);
   return (
     <div className="max-w-lg mx-auto my-10 p-6 bg-white shadow-md rounded-lg">
       {isLoading ? (

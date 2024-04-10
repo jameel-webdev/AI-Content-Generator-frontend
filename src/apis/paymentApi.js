@@ -1,5 +1,5 @@
 import axios from "axios";
-const server = "http://localhost:5000";
+const server = process.env.REACT_APP_SERVER_URL;
 
 export const freeSubscriptionApi = async () => {
   const res = await axios.post(

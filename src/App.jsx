@@ -11,6 +11,7 @@ const Login = lazy(() => import("./pages/Login.page"));
 const Dashboard = lazy(() => import("./pages/Dashboard.page"));
 const Home = lazy(() => import("./pages/Home.page"));
 const Content = lazy(() => import("./pages/GenerateContent.page"));
+const History = lazy(() => import("./pages/History.page"));
 const Pricing = lazy(() => import("./pages/Pricing.page"));
 const Plans = lazy(() => import("./pages/Plans.page"));
 const FreePlan = lazy(() => import("./pages/FreePlan.page"));
@@ -40,6 +41,7 @@ function App() {
               <Route path="/freeplan" element={<FreePlan />} />
               <Route path="/checkout" element={<CheckOut />} />
               <Route path="/verify" element={<PaymentDetails />} />
+              <Route path="/history" element={<History />} />
             </Route>
           </Routes>
         </Suspense>

@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { SiContentful } from "react-icons/si";
 import { Link } from "react-router-dom";
+import geminiLogo from "../assests/Google Ai Gemini.png";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Pricing", href: "/pricing" },
@@ -64,11 +65,11 @@ export default function PublicNavbar() {
             <div className="fixed inset-0 z-50" />
             <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
               <div className="flex items-center justify-between">
-                <a href="c" className="-m-1.5 p-1.5">
+                <a href="/" className="-m-1.5 p-1.5">
                   <span className="sr-only">Your Company</span>
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src={geminiLogo}
                     alt="Content Genie Hub"
                   />
                 </a>
@@ -96,7 +97,7 @@ export default function PublicNavbar() {
                   </div>
                   <div className="py-6">
                     <Link
-                      to="/"
+                      to="/login"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
                     >
                       Log in

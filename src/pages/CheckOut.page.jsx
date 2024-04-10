@@ -8,9 +8,8 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(
-  "pk_test_51OEAGkSBerZgP2Lejn5vEMje7Tx9d9GyO4xZM2isFOduRbiB1IfkZlaeK8t53t7mWj44ugeEPkh5j2dbxcrFWf2M00duHxDnlv"
-);
+const Publishable_key = process.env.REACT_APP_STRIPE_PUB_KEY;
+const stripePromise = loadStripe(Publishable_key);
 
 const CheckOutForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -110,7 +109,6 @@ const CheckOutForm = () => {
 const CheckOut = () => {
   const location = useLocation();
   const clientSecret = location.state;
-  console.log(clientSecret);
   return (
     <Elements stripe={stripePromise} options={{ clientSecret }}>
       <CheckOutForm />

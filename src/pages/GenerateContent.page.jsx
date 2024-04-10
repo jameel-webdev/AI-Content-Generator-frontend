@@ -8,12 +8,12 @@ import Loader from "../components/Loader.component";
 import StatusMessage from "../components/StatusMessage.component";
 import { generateContentApi } from "../apis/aiApi";
 import ReactMarkdown from "react-markdown";
+
 const Content = () => {
   const [generatedContent, setGeneratedContent] = useState("");
   const mutation = useMutation({
     mutationFn: generateContentApi,
   });
-  console.log(mutation?.data?.content);
   // Formik setup for handling form data
   const formik = useFormik({
     initialValues: {
@@ -68,7 +68,7 @@ const Content = () => {
             </span>
           </div>
           <Link to="/history" className="text-blue-600">
-            View history
+            <strong>View history</strong>
           </Link>
         </div>
 

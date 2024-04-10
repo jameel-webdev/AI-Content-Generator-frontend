@@ -24,7 +24,6 @@ const FreePlan = () => {
     }
     return () => clearTimeout(timeOut);
   }, [mutation, navigate]);
-  console.log(mutation);
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-900 flex justify-center items-center p-6">
       <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
