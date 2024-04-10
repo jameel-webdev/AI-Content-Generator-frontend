@@ -1,10 +1,12 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { upgradeSubscriptionApi } from "../apis/paymentApi";
 const tiers = [
   {
     name: "Free",
     id: "Free",
-    href: "/freeplan",
     price: "₹0.00/month",
     amount: 0,
     description: "The essentials to provide your best work for clients.",
@@ -15,9 +17,9 @@ const tiers = [
   {
     name: "Basic",
     id: "Basic",
-    href: "/checkout?plan=Basic&amount=1000&credits=250",
     price: "₹1000/month",
     amount: 1000,
+    credits: "250",
     description: "A plan that scales with your rapidly growing business.",
     features: [
       "250 Credits",
@@ -30,9 +32,9 @@ const tiers = [
   {
     name: "Premium",
     id: "Premium",
-    href: "/checkout?plan=Premium&amount=1500&credits=500&",
     price: "₹1500/month",
     amount: 1500,
+    credits: "500",
     description: "Dedicated support and infrastructure for your company.",
     features: [
       "500 Credits",
@@ -51,10 +53,44 @@ function classNames(...classes) {
 }
 
 export default function Plans() {
-  // const [selectedPlan, setSelectedPlan] = useState(null);
-  // const handleSelectedPlan = (plan) => {
-  //   setSelectedPlan(plan);
-  // };
+  const [selectedPlan, setSelectedPlan] = useState({
+    amount: 0,
+    subscriptionPlan: "",
+    monthlyRequestCount: 0,
+  });
+  const navigate = useNavigate();
+  const mutation = useMutation({ mutationFn: upgradeSubscriptionApi });
+  useEffect(() => {
+    let timeOut;
+    if (
+      selectedPlan.subscriptionPlan === "Basic" ||
+      selectedPlan.subscriptionPlan === "Premium"
+    ) {
+      mutation.mutate(selectedPlan);
+      if (mutation?.isSuccess) {
+        console.log(mutation?.data?.clientSecret);
+        timeOut = setTimeout(() => {
+          navigate(
+            `/checkout?plan=${selectedPlan.subscriptionPlan}&amount=${selectedPlan.amount}&credits=${selectedPlan.monthlyRequestCount}`,
+            {
+              state: mutation?.data?.clientSecret,
+            }
+          );
+        }, 500);
+      }
+    } else if (selectedPlan.subscriptionPlan === "Free") {
+      navigate("/freeplan");
+    }
+    return () => clearTimeout(timeOut);
+  }, [selectedPlan, navigate]);
+
+  const handleSelectedPlan = (plan) => {
+    setSelectedPlan({
+      amount: plan.amount,
+      subscriptionPlan: plan.id,
+      monthlyRequestCount: plan.credits,
+    });
+  };
 
   return (
     <div className="bg-gray-900 py-24 sm:py-32">
@@ -104,18 +140,18 @@ export default function Plans() {
                   {tier.price}
                 </span>
               </p>
-              <Link
-                to={tier.href}
+              <button
                 aria-describedby={tier.id}
                 className={classNames(
                   tier.mostPopular
-                    ? "bg-indigo-500 cursor-pointer text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500"
-                    : "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white",
+                    ? "w-full bg-indigo-500 cursor-pointer text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500"
+                    : "w-full bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white",
                   "mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 )}
+                onClick={() => handleSelectedPlan(tier)}
               >
                 Buy plan
-              </Link>
+              </button>
               <ul
                 // role="list"
                 className="mt-8 space-y-3 text-sm leading-6 text-gray-300 xl:mt-10"

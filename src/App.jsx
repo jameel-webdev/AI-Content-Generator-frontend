@@ -14,6 +14,8 @@ const Content = lazy(() => import("./pages/GenerateContent.page"));
 const Pricing = lazy(() => import("./pages/Pricing.page"));
 const Plans = lazy(() => import("./pages/Plans.page"));
 const FreePlan = lazy(() => import("./pages/FreePlan.page"));
+const CheckOut = lazy(() => import("./pages/CheckOut.page"));
+const PaymentDetails = lazy(() => import("./pages/PaymentDetail.page"));
 
 function App() {
   const { auth } = useAuth();
@@ -36,6 +38,8 @@ function App() {
               <Route path="/generate-content" element={<Content />} />
               <Route path="/plans" element={<Pricing />} />
               <Route path="/freeplan" element={<FreePlan />} />
+              <Route path="/checkout" element={<CheckOut />} />
+              <Route path="/verify" element={<PaymentDetails />} />
             </Route>
           </Routes>
         </Suspense>

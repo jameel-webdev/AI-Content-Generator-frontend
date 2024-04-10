@@ -83,11 +83,14 @@ const Dashboard = () => {
             <h2 className="text-xl font-semibold mb-4">Payment & Plans</h2>
             <div>
               <p className="mb-4">
-                Current Plan: {data?.user?.subscriptionPlan || "Trial"}
+                Current Plan : {data?.user?.subscriptionPlan || "Trial"}
+              </p>
+              <p className="mb-4">
+                Total Credits : {data?.user?.monthlyRequestCount || "Trial"}
               </p>
               <Link
                 to="/plans"
-                className=" py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Upgrade Plan
               </Link>

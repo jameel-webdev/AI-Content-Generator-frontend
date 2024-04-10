@@ -45,18 +45,10 @@ const FreePlan = () => {
         </div>
         <div className="flex flex-col gap-2 mb-2 text-center">
           {mutation?.isError && (
-            <>
-              <StatusMessage
-                type={"error"}
-                message={mutation?.error?.response?.data?.message}
-              />
-              <Link
-                to="/pricing"
-                className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Choose Another Plan
-              </Link>
-            </>
+            <StatusMessage
+              type={"error"}
+              message={mutation?.error?.response?.data?.message}
+            />
           )}
           {mutation?.isPending && (
             <StatusMessage type={"loading"} message={"Loading.."} />
@@ -66,12 +58,17 @@ const FreePlan = () => {
           )}
         </div>
         <button
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-green-500 to-lime-500 hover:from-lime-600 hover:to-lime-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
           onClick={handleClick}
           disabled={mutation?.isError}
         >
           Confirm Free Plan
         </button>
+        <Link to="/plans">
+          <button className="mt-3 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Choose Different Plan
+          </button>
+        </Link>
       </div>
     </div>
   );

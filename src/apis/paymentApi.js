@@ -23,4 +23,13 @@ export const upgradeSubscriptionApi = async (details) => {
   return res?.data;
 };
 
-// http://localhost:5000
+export const verifyPaymentApi = async (paymentId) => {
+  const res = await axios.post(
+    `${server}/api/v1/payment/verify/${paymentId}`,
+    {},
+    { withCredentials: true }
+  );
+  return res?.data;
+};
+
+// http://localhost:5000:paymentId
