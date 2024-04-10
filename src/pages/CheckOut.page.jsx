@@ -37,7 +37,7 @@ const CheckOutForm = () => {
       const { paymentIntent, error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${process.env.REACT_APP_SERVER_URL}/verify`,
+          return_url: `${process.env.REACT_APP_FRONTEND_URL}/verify`,
         },
       });
 
