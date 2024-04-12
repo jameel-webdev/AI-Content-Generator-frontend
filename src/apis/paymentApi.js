@@ -31,5 +31,3 @@ export const verifyPaymentApi = async (paymentId) => {
   );
   return res?.data;
 };
-
-// http://localhost:5000:paymentId

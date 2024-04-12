@@ -1,10 +1,10 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useMutation } from "@tanstack/react-query";
-import { Fragment, useEffect } from "react";
-import { SiContentful } from "react-icons/si";
+import { useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
+import { SiContentful } from "react-icons/si";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutApi } from "../apis/usersApi";
 import { useAuth } from "../AuthContext/AuthContext";
@@ -31,7 +31,7 @@ export default function PrivateNavbar() {
       logout();
       navigate("/");
     }
-  }, [mutation, logout, navigate]);
+  }, [mutation.isSuccess, logout, navigate]);
 
   return (
     <Disclosure as="nav" className="bg-gray-900">

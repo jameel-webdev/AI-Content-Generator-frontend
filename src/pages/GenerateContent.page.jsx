@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import * as Yup from "yup";
+import { generateContentApi } from "../apis/aiApi";
 import { profileApi } from "../apis/usersApi";
 import Loader from "../components/Loader.component";
 import StatusMessage from "../components/StatusMessage.component";
-import { generateContentApi } from "../apis/aiApi";
-import ReactMarkdown from "react-markdown";
 
 const Content = () => {
+  const [initialPrompt, setInitialPrompt] = useState("A prompt is required");
+  const queryClient = useQueryClient();
   const [generatedContent, setGeneratedContent] = useState("");
   const mutation = useMutation({
     mutationFn: generateContentApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["profile"]);
+    },
   });
   // Formik setup for handling form data
   const formik = useFormik({
@@ -23,9 +28,11 @@ const Content = () => {
       prompt: Yup.string().required("A prompt is required"),
     }),
     onSubmit: (values) => {
+      setInitialPrompt(values.prompt);
       mutation.mutate(values);
     },
   });
+
   const userQuery = useQuery({
     queryFn: profileApi,
     queryKey: ["profile"],
@@ -33,9 +40,8 @@ const Content = () => {
   useEffect(() => {
     if (mutation.isSuccess) {
       setGeneratedContent(mutation?.data?.content);
-      userQuery.refetch();
     }
-  }, [mutation, userQuery]);
+  }, [mutation]);
   if (userQuery.isLoading) return <Loader />;
   if (userQuery.isError)
     return (
@@ -103,15 +109,23 @@ const Content = () => {
             <StatusMessage type={"success"} message={"Content Generated 🎉"} />
           )}
           {mutation?.isError && (
-            <StatusMessage
-              type={"error"}
-              message={mutation?.error?.response?.data?.message}
-            />
+            <>
+              <StatusMessage
+                type={"error"}
+                message={mutation?.error?.response?.data?.message}
+              />
+              <Link to="/plans">
+                <button className=" mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-green-500 to-lime-500 hover:from-lime-600 hover:to-lime-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500">
+                  Buy Credits
+                </button>
+              </Link>
+            </>
           )}
           {/* Submit button */}
           <button
             type="submit"
             className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            disabled={initialPrompt === formik.values.prompt ? true : false}
           >
             Generate Content
           </button>

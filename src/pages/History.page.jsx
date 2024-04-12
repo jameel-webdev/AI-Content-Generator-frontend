@@ -1,13 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash, FaPlusSquare, FaTrashAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { profileApi } from "../apis/usersApi";
-import StatusMessage from "../components/StatusMessage.component";
 import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
+import { deleteHistoryApi, profileApi } from "../apis/usersApi";
+import StatusMessage from "../components/StatusMessage.component";
 
 const ContentHistory = () => {
+  const queryClient = useQueryClient();
   const [expandedContentId, setExpandedContentId] = useState(null);
+  const mutation = useMutation({
+    mutationFn: deleteHistoryApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["profile"]);
+    },
+  });
   const { data, isLoading, isError, error } = useQuery({
     queryFn: profileApi,
     queryKey: ["profile"],
@@ -17,13 +24,15 @@ const ContentHistory = () => {
       prevState === contentId ? null : contentId
     );
   };
+  const handleDelete = (contentId, userId) => {
+    mutation.mutate({ contentId, userId });
+  };
   if (isLoading) {
     <StatusMessage type={"loading"} message={"Loading..."} />;
   }
   if (isError) {
     <StatusMessage type={"error"} message={error?.response?.data?.message} />;
   }
-
   return (
     <div className="bg-gray-100 py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,9 +71,22 @@ const ContentHistory = () => {
                           className="text-green-500 hover:text-green-600 cursor-pointer"
                           onClick={() => toggleExpand(content?._id)}
                         >
-                          {isExpanded ? <FaEye /> : <FaEyeSlash />}
+                          {isExpanded ? <FaEyeSlash /> : <FaEye />}
                         </button>
-                        <button className="text-red-500 hover:text-red-600 cursor-pointer">
+                        <button
+                          className="text-red-500 hover:text-red-600 cursor-pointer"
+                          onClick={() => {
+                            const response = prompt(
+                              'Are you sure? You want to Delete This Content?\nIf Yes Type "YES"(in uppercase)'
+                            );
+                            if (response === "YES") {
+                              alert("Content deletion confirmed");
+                              handleDelete(content?._id, data?.user?._id);
+                            } else {
+                              alert("Content deletion canceled");
+                            }
+                          }}
+                        >
                           <FaTrashAlt />
                         </button>
                       </div>

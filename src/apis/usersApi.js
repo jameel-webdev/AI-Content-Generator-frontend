@@ -55,3 +55,34 @@ export const profileApi = async () => {
   });
   return res?.data;
 };
+
+export const updateUserApi = async (userData) => {
+  const res = await axios.put(
+    `${server}/api/v1/user`,
+    {
+      username: userData?.username,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+  return res?.data;
+};
+
+export const deleteUserApi = async () => {
+  const res = await axios.delete(`${server}/api/v1/user`, {
+    withCredentials: true,
+  });
+  return res?.data;
+};
+
+export const deleteHistoryApi = async (ids) => {
+  const res = await axios.post(
+    `${server}/api/v1/user/delete-content/${ids.contentId}?userId=${ids.userId}`,
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+  return res?.data;
+};
