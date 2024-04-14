@@ -53,9 +53,12 @@ const Content = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-900 flex justify-center items-center p-6">
       <div className="bg-white rounded-xl shadow-xl overflow-hidden max-w-2xl w-full p-6">
-        <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">
-          AI Content Generator
-        </h2>
+        <h4 className="text-3xl font-extrabold text-gray-800 mb-2 text-center">
+          Hello, {userQuery?.data?.user?.username}
+        </h4>
+        <p className="text-xl font-semibold text-gray-800 mb-6 text-center">
+          Get help with writing, planning, learning, and more from Gemini AI
+        </p>
 
         {/* Static display for Plan and Credits */}
         <div className="flex flex-wrap gap-2">
