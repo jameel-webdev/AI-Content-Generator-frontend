@@ -1,7 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { SiContentful } from "react-icons/si";
@@ -19,9 +19,15 @@ function classNames(...classes) {
 }
 
 export default function PrivateNavbar() {
+  const queryClient = useQueryClient();
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const mutation = useMutation({ mutationFn: logoutApi });
+  const mutation = useMutation({
+    mutationFn: logoutApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["checkAuth"]);
+    },
+  });
   //handle logout
   const handleLogout = () => {
     mutation.mutate();
